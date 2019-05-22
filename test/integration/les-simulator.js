@@ -63,7 +63,7 @@ test('LES: send status message (NetworkId mismatch)', async (t) => {
   util.twoPeerMsgExchange(t, capabilities, opts)
 })
 
-test('ETH: send status message (Genesis block mismatch)', async (t) => {
+test('PWP: send status message (Genesis block mismatch)', async (t) => {
   let opts = {}
   opts.status0 = Object.assign({}, status)
   let status1 = Object.assign({}, status)
@@ -120,7 +120,7 @@ test('LES: invalid status send', async (t) => {
   opts.status1 = Object.assign({}, status)
   opts.onOnceStatus0 = function (rlpxs, les) {
     try {
-      les.sendMessage(devp2p.ETH.MESSAGE_CODES.STATUS, 1, [])
+      les.sendMessage(devp2p.PWP.MESSAGE_CODES.STATUS, 1, [])
     } catch (err) {
       const msg = 'Error: Please send status message through .sendStatus'
       t.equal(err.toString(), msg, `should emit error: ${msg}`)
