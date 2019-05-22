@@ -1,6 +1,6 @@
 const devp2p = require('../src')
-// const EthereumTx = require('ethereumjs-tx')
-const EthereumBlock = require('ethereumjs-block')
+// const PuffscoinTx = require('puffscoinjs-tx')
+const EthereumBlock = require('puffscoinjs-block')
 // const LRUCache = require('lru-cache')
 const ms = require('ms')
 const chalk = require('chalk')
@@ -10,11 +10,11 @@ const Buffer = require('safe-buffer').Buffer
 
 const PRIVATE_KEY = randomBytes(32)
 
-const CHAIN_ID = 4 // Rinkeby
+const CHAIN_ID = 420 // Mainnet
 const GENESIS_TD = 1
-const GENESIS_HASH = Buffer.from('6341fd3daf94b748c72ced5a5b26028f2474f5f00d824504e4fa37a75767e177', 'hex')
+const GENESIS_HASH = Buffer.from('b4973da140b05bfffb1cd734ed871f888e71cf563a4218f82a092fc4540f6c03', 'hex')
 
-const BOOTNODES = require('ethereum-common').bootstrapNodes.filter((node) => {
+const BOOTNODES = require('puffscion-common').bootstrapNodes.filter((node) => {
   return node.chainId === CHAIN_ID
 }).map((node) => {
   return {
@@ -23,7 +23,7 @@ const BOOTNODES = require('ethereum-common').bootstrapNodes.filter((node) => {
     tcpPort: node.port
   }
 })
-const REMOTE_CLIENTID_FILTER = ['go1.5', 'go1.6', 'go1.7', 'Geth/v1.7', 'quorum', 'pirl', 'ubiq', 'gmc', 'gwhale', 'prichain']
+const REMOTE_CLIENTID_FILTER = ['go1.5', 'go1.6', 'go1.10.4', 'Gpuffs/v1.9', 'quorum', 'pirl', 'ubiq', 'gmc', 'gwhale', 'prichain']
 
 const getPeerAddr = (peer) => `${peer._socket.remoteAddress}:${peer._socket.remotePort}`
 
@@ -133,8 +133,8 @@ rlpx.on('peer:error', (peer, err) => {
 })
 
 // uncomment, if you want accept incoming connections
-// rlpx.listen(30303, '0.0.0.0')
-// dpt.bind(30303, '0.0.0.0')
+// rlpx.listen(31313, '0.0.0.0')
+// dpt.bind(31313, '0.0.0.0')
 
 for (let bootnode of BOOTNODES) {
   dpt.bootstrap(bootnode).catch((err) => {
@@ -144,7 +144,7 @@ for (let bootnode of BOOTNODES) {
 
 // connect to local ethereum node (debug)
 /*
-dpt.addPeer({ address: '127.0.0.1', udpPort: 30303, tcpPort: 30303 })
+dpt.addPeer({ address: '127.0.0.1', udpPort: 31313, tcpPort: 31313 })
   .then((peer) => {
     return rlpx.connect({
       id: peer.id,
