@@ -5,7 +5,7 @@ This library bundles different components for lower-level peer-to-peer connectio
 - Distributed Peer Table (DPT) / Node Discovery
 - RLPx Transport Protocol
 - PUFFScoin Wire Protocol (PWP)
-- Light Ethereum Subprotocol (LES/2)
+- Light PUFFScoin Subprotocol (LES/2)
 
 The library is based on [puffscoinjs/node-devp2p](https://github.com/puffscoinjs/node-devp2p) as well
 as other sub-libraries (``node-*`` named) (all outdated).
