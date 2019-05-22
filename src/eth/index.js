@@ -144,7 +144,7 @@ class PWP extends EventEmitter {
       case MESSAGE_CODES.NODE_DATA:
       case MESSAGE_CODES.GET_RECEIPTS:
       case MESSAGE_CODES.RECEIPTS:
-        if (this._version >= ETH.eth63.version) break
+        if (this._version >= PWP.eth63.version) break
         throw new Error(`Code ${code} not allowed with version ${this._version}`)
 
       default:
@@ -159,4 +159,4 @@ class PWP extends EventEmitter {
   }
 }
 
-module.exports = ETH
+module.exports = PWP
