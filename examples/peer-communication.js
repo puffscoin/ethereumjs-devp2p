@@ -258,8 +258,8 @@ rlpx.on('peer:error', (peer, err) => {
 })
 
 // uncomment, if you want accept incoming connections
-// rlpx.listen(30303, '0.0.0.0')
-// dpt.bind(30303, '0.0.0.0')
+// rlpx.listen(31313, '0.0.0.0')
+// dpt.bind(31313, '0.0.0.0')
 
 for (let bootnode of BOOTNODES) {
   dpt.bootstrap(bootnode).catch((err) => {
@@ -269,7 +269,7 @@ for (let bootnode of BOOTNODES) {
 
 // connect to local ethereum node (debug)
 /*
-dpt.addPeer({ address: '127.0.0.1', udpPort: 30303, tcpPort: 30303 })
+dpt.addPeer({ address: '127.0.0.1', udpPort: 31313, tcpPort: 31313 })
   .then((peer) => {
     return rlpx.connect({
       id: peer.id,
