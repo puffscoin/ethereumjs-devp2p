@@ -1,6 +1,6 @@
 const devp2p = require('../src')
 // const PuffscoinTx = require('puffscoinjs-tx')
-const EthereumBlock = require('puffscoinjs-block')
+const PuffscoinBlock = require('puffscoinjs-block')
 // const LRUCache = require('lru-cache')
 const ms = require('ms')
 const chalk = require('chalk')
@@ -80,7 +80,7 @@ rlpx.on('peer:added', (peer) => {
           console.log(`${addr} not more than one block header expected (received: ${payload[2].length})`)
           break
         }
-        let header = new EthereumBlock.Header(payload[2][0])
+        let header = new PuffscoinBlock.Header(payload[2][0])
 
         setTimeout(() => {
           les.sendMessage(devp2p.LES.MESSAGE_CODES.GET_BLOCK_BODIES, 2, [ header.hash() ])
@@ -95,7 +95,7 @@ rlpx.on('peer:added', (peer) => {
         }
 
         let header2 = requests.bodies.shift()
-        let block = new EthereumBlock([header2.raw, payload[2][0][0], payload[2][0][1]])
+        let block = new PuffscoinBlock([header2.raw, payload[2][0][0], payload[2][0][1]])
         let isValid = await isValidBlock(block)
         let isValidPayload = false
         if (isValid) {
@@ -142,7 +142,7 @@ for (let bootnode of BOOTNODES) {
   })
 }
 
-// connect to local ethereum node (debug)
+// connect to local PUFFScoin node (debug)
 /*
 dpt.addPeer({ address: '127.0.0.1', udpPort: 31313, tcpPort: 31313 })
   .then((peer) => {
