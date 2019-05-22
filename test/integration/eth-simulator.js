@@ -2,10 +2,10 @@ const test = require('tape')
 const devp2p = require('../../src')
 const util = require('./util.js')
 
-const CHAIN_ID = 1
+const CHAIN_ID = 420
 
 const GENESIS_TD = 17179869184
-const GENESIS_HASH = Buffer.from('d4e56740f876aef8c010b86a40d5f56745a118d0906a34e69aec8c0db1cb8fa3', 'hex')
+const GENESIS_HASH = Buffer.from('b4973da140b05bfffb1cd734ed871f888e71cf563a4218f82a092fc4540f6c03', 'hex')
 
 var capabilities = [
   devp2p.ETH.eth63,
@@ -56,7 +56,7 @@ test('ETH: send status message (Genesis block mismatch)', async (t) => {
   status1['genesisHash'] = Buffer.alloc(32)
   opts.status1 = status1
   opts.onPeerError0 = function (err, rlpxs) {
-    const msg = 'Genesis block mismatch: d4e56740f876aef8c010b86a40d5f56745a118d0906a34e69aec8c0db1cb8fa3 / 0000000000000000000000000000000000000000000000000000000000000000'
+    const msg = 'Genesis block mismatch: b4973da140b05bfffb1cd734ed871f888e71cf563a4218f82a092fc4540f6c03 / 0000000000000000000000000000000000000000000000000000000000000000'
     t.equal(err.message, msg, `should emit error: ${msg}`)
     util.destroyRLPXs(rlpxs)
     t.end()
