@@ -26,7 +26,7 @@ const MESSAGE_CODES = {
   RECEIPTS: 0x10
 }
 
-class ETH extends EventEmitter {
+class PWP extends EventEmitter {
   constructor (version, peer, send) {
     super()
 
@@ -41,8 +41,8 @@ class ETH extends EventEmitter {
     }, ms('5s'))
   }
 
-  static eth62 = { name: 'eth', version: 62, length: 8, constructor: ETH }
-  static eth63 = { name: 'eth', version: 63, length: 17, constructor: ETH }
+  static eth62 = { name: 'eth', version: 62, length: 8, constructor: PWP }
+  static eth63 = { name: 'eth', version: 63, length: 17, constructor: PWP }
 
   static MESSAGE_CODES = MESSAGE_CODES
 
@@ -66,14 +66,14 @@ class ETH extends EventEmitter {
       case MESSAGE_CODES.GET_BLOCK_BODIES:
       case MESSAGE_CODES.BLOCK_BODIES:
       case MESSAGE_CODES.NEW_BLOCK:
-        if (this._version >= ETH.eth62.version) break
+        if (this._version >= PWP.eth62.version) break
         return
 
       case MESSAGE_CODES.GET_NODE_DATA:
       case MESSAGE_CODES.NODE_DATA:
       case MESSAGE_CODES.GET_RECEIPTS:
       case MESSAGE_CODES.RECEIPTS:
-        if (this._version >= ETH.eth63.version) break
+        if (this._version >= PWP.eth63.version) break
         return
 
       default:
@@ -137,7 +137,7 @@ class ETH extends EventEmitter {
       case MESSAGE_CODES.GET_BLOCK_BODIES:
       case MESSAGE_CODES.BLOCK_BODIES:
       case MESSAGE_CODES.NEW_BLOCK:
-        if (this._version >= ETH.eth62.version) break
+        if (this._version >= PWP.eth62.version) break
         throw new Error(`Code ${code} not allowed with version ${this._version}`)
 
       case MESSAGE_CODES.GET_NODE_DATA:
