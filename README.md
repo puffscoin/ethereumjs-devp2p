@@ -135,8 +135,8 @@ const rlpx = new devp2p.RLPx(PRIVATE_KEY, {
   dpt: dpt,
   maxPeers: 25,
   capabilities: [
-    devp2p.ETH.eth63,
-    devp2p.ETH.eth62
+    devp2p.PWP.eth63,
+    devp2p.PWP.eth62
   ],
   listenPort: null
 })
@@ -152,9 +152,9 @@ Creates new RLPx object
 - `privateKey` - Key for message encoding/signing.
 - `options.timeout` - Peer `ping` timeout in ms (default: ``10s``).
 - `options.maxPeers` - Max number of peer connections (default: ``10``).
-- `options.clientId` - Client ID string (default example: ``ethereumjs-devp2p/v2.1.3/darwin-x64/nodejs``).
+- `options.clientId` - Client ID string (default example: ``puffscoinjs-devp2p/v2.1.3/darwin-x64/nodejs``).
 - `options.remoteClientIdFilter` - Optional list of client ID filter strings (e.g. `['go1.5', 'quorum']`).
-- `options.capabilities` - Upper layer protocol capabilities, e.g. `[devp2p.ETH.eth63, devp2p.ETH.eth62]`.
+- `options.capabilities` - Upper layer protocol capabilities, e.g. `[devp2p.PWP.eth63, devp2p.PWP.eth62]`.
 - `options.listenPort` - The listening port for the server or ``null`` for default.
 - `options.dpt` - `DPT` object for the peers to connect to (default: ``null``, no `DPT` peer management).
 
