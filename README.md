@@ -1,18 +1,13 @@
-# ethereumjs-devp2p
-
-[![NPM Package](https://img.shields.io/npm/v/ethereumjs-devp2p.svg?style=flat-square)](https://www.npmjs.org/package/ethereumjs-devp2p)
-[![Build Status](https://travis-ci.org/ethereumjs/ethereumjs-devp2p.svg?branch=master)](https://travis-ci.org/ethereumjs/ethereumjs-devp2p)
-[![Coverage Status](https://img.shields.io/coveralls/ethereumjs/ethereumjs-devp2p.svg?style=flat-square)](https://coveralls.io/r/ethereumjs/ethereumjs-devp2p)
-[![js-standard-style](https://cdn.rawgit.com/feross/standard/master/badge.svg)](https://github.com/feross/standard)
+# puffscoinjs-devp2p
 
 This library bundles different components for lower-level peer-to-peer connection and message exchange:
 
 - Distributed Peer Table (DPT) / Node Discovery
 - RLPx Transport Protocol
-- Ethereum Wire Protocol (ETH)
+- PUFFScoin Wire Protocol (PWP)
 - Light Ethereum Subprotocol (LES/2)
 
-The library is based on [ethereumjs/node-devp2p](https://github.com/ethereumjs/node-devp2p) as well
+The library is based on [puffscoinjs/node-devp2p](https://github.com/puffscoinjs/node-devp2p) as well
 as other sub-libraries (``node-*`` named) (all outdated).
 
 ## Run/Build
@@ -331,27 +326,20 @@ For the debugging output to show up, set the ``DEBUG`` environment variable (e.g
 You should now see debug output like to following when running one of the examples above (the indented lines):
 
 ```
-Add peer: 52.3.158.184:30303 Geth/v1.7.3-unstable-479aa61f/linux-amd64/go1.9 (eth63) (total: 2)
-  devp2p:rlpx:peer Received body 52.169.42.101:30303 01c110 +133ms
+Add peer: 52.3.158.184:31313 Gpuffs/v1.9.0-Amsterdam-cc7b14e9/linux-amd64/go1.10.4  (total: 2)
+  devp2p:rlpx:peer Received body 52.169.42.101:31313 01c110 +133ms
   devp2p:rlpx:peer Message code: 1 - 0 = 1 +0ms
   devp2p:rlpx refill connections.. queue size: 0, open slots: 20 +1ms
-  devp2p:rlpx 52.169.42.101:30303 disconnect, reason: 16 +1ms
-Remove peer: 52.169.42.101:30303 (peer disconnect, reason code: 16) (total: 1)
+  devp2p:rlpx 52.169.42.101:31313 disconnect, reason: 16 +1ms
+Remove peer: 52.169.42.101:31313 (peer disconnect, reason code: 16) (total: 1)
 ```
 
 ## General References
 
 ### Other Implementations
 
-The following is a list of major implementations of the ``devp2p`` stack in other languages:
+- [Go Puffscoin](https://github.com/puffscoin/go-puffscoin/tree/master/p2p) (Go)
 
-- [pydevp2p](https://github.com/ethereum/pydevp2p) (Python)
-- [Go Ethereum](https://github.com/ethereum/go-ethereum/tree/master/p2p) (Go)
-- [Exthereum](https://github.com/exthereum/exth_crypto) (Elixir)
-
-### Links
-
-- [Blog article series](https://ocalog.com/post/10/)  on implementing Ethereum protocol stack
 
 ## License
 
