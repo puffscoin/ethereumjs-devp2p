@@ -267,7 +267,7 @@ for (let bootnode of BOOTNODES) {
   })
 }
 
-// connect to local ethereum node (debug)
+// connect to local PUFFScoin node (debug)
 /*
 dpt.addPeer({ address: '127.0.0.1', udpPort: 31313, tcpPort: 31313 })
   .then((peer) => {
