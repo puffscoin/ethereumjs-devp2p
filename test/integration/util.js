@@ -36,8 +36,8 @@ exports.getTestRLPXs = function (numRLPXs, maxPeers, capabilities) {
   const rlpxs = []
   if (!capabilities) {
     capabilities = [
-      devp2p.ETH.eth63,
-      devp2p.ETH.eth62
+      devp2p.PWP.eth63,
+      devp2p.PWP.eth62
     ]
   }
   const dpts = exports.getTestDPTs(numRLPXs)
@@ -95,7 +95,7 @@ exports.twoPeerMsgExchange = function (t, capabilities, opts) {
     const protocol = peer.getProtocols()[0]
     protocol.on('message', async (code, payload) => {
       switch (code) {
-        // Comfortability hack, use constants like devp2p.ETH.MESSAGE_CODES.STATUS
+        // Comfortability hack, use constants like devp2p.PWP.MESSAGE_CODES.STATUS
         // in production use
         case 0x00: // (-> 1)
           t.pass('should receive initial status message')
