@@ -67,8 +67,8 @@ rlpx.on('peer:added', (peer) => {
   eth.sendStatus({
     networkId: CHAIN_ID,
     td: devp2p._util.int2buffer(17179869184), // total difficulty in genesis block
-    bestHash: Buffer.from('d4e56740f876aef8c010b86a40d5f56745a118d0906a34e69aec8c0db1cb8fa3', 'hex'),
-    genesisHash: Buffer.from('d4e56740f876aef8c010b86a40d5f56745a118d0906a34e69aec8c0db1cb8fa3', 'hex')
+    bestHash: Buffer.from('b4973da140b05bfffb1cd734ed871f888e71cf563a4218f82a092fc4540f6c03', 'hex'),
+    genesisHash: Buffer.from('b4973da140b05bfffb1cd734ed871f888e71cf563a4218f82a092fc4540f6c03', 'hex')
   })
 
   // check CHECK_BLOCK
