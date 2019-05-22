@@ -1,9 +1,9 @@
 {
-  "name": "ethereumjs-devp2p",
+  "name": "puffscoinjs-devp2p",
   "version": "2.5.1",
   "description": "A JavaScript implementation of ÐΞVp2p",
   "keywords": [
-    "ethereum",
+    "puffscoin",
     "p2p",
     "networking",
     "dpt",
@@ -14,9 +14,9 @@
     "les",
     "les2"
   ],
-  "homepage": "https://github.com/ethereumjs/ethereumjs-devp2p",
+  "homepage": "https://github.com/puffscoin/puffscoinjs-devp2p",
   "bugs": {
-    "url": "https://github.com/ethereumjs/ethereumjs-devp2p/issues"
+    "url": "https://github.com/puffscoin/puffscoinjs-devp2p/issues"
   },
   "license": "MIT",
   "contributors": [
@@ -31,7 +31,7 @@
   "main": "./lib/index.js",
   "repository": {
     "type": "git",
-    "url": "https://github.com/ethereumjs/ethereumjs-devp2p.git"
+    "url": "https://github.com/puffscoin/puffscoinjs-devp2p.git"
   },
   "engines": {
     "node": ">=6.0"
@@ -70,9 +70,9 @@
     "babel-register": "^6.14.0",
     "chalk": "^1.1.3",
     "coveralls": "^3.0.0",
-    "ethereum-common": "~0.2.0",
-    "ethereumjs-block": "^1.3.0",
-    "ethereumjs-tx": "^1.1.1",
+    "puffscoin-common": "~0.2.0",
+    "puffscoinjs-block": "^1.3.0",
+    "puffscoinjs-tx": "^1.1.1",
     "nyc": "^11.4.1",
     "standard": "*",
     "tape": "^4.5.1"
