@@ -1,5 +1,5 @@
 exports.DPT = require('./dpt')
-exports.ETH = require('./eth')
+exports.PWP = require('./eth')
 exports.LES = require('./les')
 exports.RLPx = require('./rlpx')
 
