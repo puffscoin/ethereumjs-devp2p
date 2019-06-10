@@ -36,8 +36,8 @@ exports.getTestRLPXs = function (numRLPXs, maxPeers, capabilities) {
   const rlpxs = []
   if (!capabilities) {
     capabilities = [
-      devp2p.PWP.eth63,
-      devp2p.PWP.eth62
+      devp2p.PWP.puffs63,
+      devp2p.PWP.puffs62
     ]
   }
   const dpts = exports.getTestDPTs(numRLPXs)
