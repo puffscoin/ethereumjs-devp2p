@@ -47,8 +47,8 @@ const rlpx = new devp2p.RLPx(PRIVATE_KEY, {
   dpt: dpt,
   maxPeers: 25,
   capabilities: [
-    devp2p.PWP.eth63,
-    devp2p.PWP.eth62
+    devp2p.PWP.puffs63,
+    devp2p.PWP.puffs62
   ],
   remoteClientIdFilter: REMOTE_CLIENTID_FILTER,
   listenPort: null
@@ -58,13 +58,13 @@ rlpx.on('error', (err) => console.error(chalk.red(`RLPx error: ${err.stack || er
 
 rlpx.on('peer:added', (peer) => {
   const addr = getPeerAddr(peer)
-  const eth = peer.getProtocols()[0]
+  const puffs = peer.getProtocols()[0]
   const requests = { headers: [], bodies: [], msgTypes: {} }
 
   const clientId = peer.getHelloMessage().clientId
-  console.log(chalk.green(`Add peer: ${addr} ${clientId} (eth${eth.getVersion()}) (total: ${rlpx.getPeers().length})`))
+  console.log(chalk.green(`Add peer: ${addr} ${clientId} (puffs${puffs.getVersion()}) (total: ${rlpx.getPeers().length})`))
 
-  eth.sendStatus({
+  puffs.sendStatus({
     networkId: CHAIN_ID,
     td: devp2p._util.int2buffer(17179869184), // total difficulty in genesis block
     bestHash: Buffer.from('b4973da140b05bfffb1cd734ed871f888e71cf563a4218f82a092fc4540f6c03', 'hex'),
@@ -74,15 +74,15 @@ rlpx.on('peer:added', (peer) => {
   // check CHECK_BLOCK
   let forkDrop = null
   let forkVerified = false
-  eth.once('status', () => {
-    eth.sendMessage(devp2p.PWP.MESSAGE_CODES.GET_BLOCK_HEADERS, [ CHECK_BLOCK_NR, 1, 0, 0 ])
+  puffs.once('status', () => {
+    puffs.sendMessage(devp2p.PWP.MESSAGE_CODES.GET_BLOCK_HEADERS, [ CHECK_BLOCK_NR, 1, 0, 0 ])
     forkDrop = setTimeout(() => {
       peer.disconnect(devp2p.RLPx.DISCONNECT_REASONS.USELESS_PEER)
     }, ms('15s'))
     peer.once('close', () => clearTimeout(forkDrop))
   })
 
-  eth.on('message', async (code, payload) => {
+  puffs.on('message', async (code, payload) => {
     if (code in requests.msgTypes) {
       requests.msgTypes[code] += 1
     } else {
@@ -97,7 +97,7 @@ rlpx.on('peer:added', (peer) => {
           const blockHash = item[0]
           if (blocksCache.has(blockHash.toString('hex'))) continue
           setTimeout(() => {
-            eth.sendMessage(devp2p.PWP.MESSAGE_CODES.GET_BLOCK_HEADERS, [ blockHash, 1, 0, 0 ])
+            puffs.sendMessage(devp2p.PWP.MESSAGE_CODES.GET_BLOCK_HEADERS, [ blockHash, 1, 0, 0 ])
             requests.headers.push(blockHash)
           }, ms('0.1s'))
         }
@@ -123,7 +123,7 @@ rlpx.on('peer:added', (peer) => {
         if (requests.headers.length === 0 && requests.msgTypes[code] >= 8) {
           peer.disconnect(devp2p.RLPx.DISCONNECT_REASONS.USELESS_PEER)
         } else {
-          eth.sendMessage(devp2p.PWP.MESSAGE_CODES.BLOCK_HEADERS, headers)
+          puffs.sendMessage(devp2p.PWP.MESSAGE_CODES.BLOCK_HEADERS, headers)
         }
         break
 
@@ -155,7 +155,7 @@ rlpx.on('peer:added', (peer) => {
             if (header.hash().equals(blockHash)) {
               isValidPayload = true
               setTimeout(() => {
-                eth.sendMessage(devp2p.PWP.MESSAGE_CODES.GET_BLOCK_BODIES, [ blockHash ])
+                puffs.sendMessage(devp2p.PWP.MESSAGE_CODES.GET_BLOCK_BODIES, [ blockHash ])
                 requests.bodies.push(header)
               }, ms('0.1s'))
               break
@@ -173,7 +173,7 @@ rlpx.on('peer:added', (peer) => {
         if (requests.headers.length === 0 && requests.msgTypes[code] >= 8) {
           peer.disconnect(devp2p.RLPx.DISCONNECT_REASONS.USELESS_PEER)
         } else {
-          eth.sendMessage(devp2p.PWP.MESSAGE_CODES.BLOCK_BODIES, [])
+          puffs.sendMessage(devp2p.PWP.MESSAGE_CODES.BLOCK_BODIES, [])
         }
         break
 
@@ -216,7 +216,7 @@ rlpx.on('peer:added', (peer) => {
         if (requests.headers.length === 0 && requests.msgTypes[code] >= 8) {
           peer.disconnect(devp2p.RLPx.DISCONNECT_REASONS.USELESS_PEER)
         } else {
-          eth.sendMessage(devp2p.PWP.MESSAGE_CODES.NODE_DATA, [])
+          puffs.sendMessage(devp2p.PWP.MESSAGE_CODES.NODE_DATA, [])
         }
         break
 
@@ -227,7 +227,7 @@ rlpx.on('peer:added', (peer) => {
         if (requests.headers.length === 0 && requests.msgTypes[code] >= 8) {
           peer.disconnect(devp2p.RLPx.DISCONNECT_REASONS.USELESS_PEER)
         } else {
-          eth.sendMessage(devp2p.PWP.MESSAGE_CODES.RECEIPTS, [])
+          puffs.sendMessage(devp2p.PWP.MESSAGE_CODES.RECEIPTS, [])
         }
         break
 
