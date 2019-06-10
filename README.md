@@ -116,12 +116,6 @@ Events emitted:
 | close         | Forwarded from server                    |
 | error         | Forwarded from server                    |
 
-### Reference
-
-- [Node discovery protocol](https://github.com/ethereum/wiki/wiki/Node-discovery-protocol)
-- [RLPx - Node Discovery Protocol](https://github.com/ethereum/devp2p/blob/master/rlpx.md#node-discovery)
-- [Kademlia Peer Selection](https://github.com/ethereum/wiki/wiki/Kademlia-Peer-Selection)
-
 ## RLPx Transport Protocol
 
 Connect to a peer, organize the communication, see [./src/rlpx/](./src/rlpx/)
@@ -135,8 +129,8 @@ const rlpx = new devp2p.RLPx(PRIVATE_KEY, {
   dpt: dpt,
   maxPeers: 25,
   capabilities: [
-    devp2p.PWP.eth63,
-    devp2p.PWP.eth62
+    devp2p.PWP.puffs63,
+    devp2p.PWP.puffs62
   ],
   listenPort: null
 })
@@ -154,7 +148,7 @@ Creates new RLPx object
 - `options.maxPeers` - Max number of peer connections (default: ``10``).
 - `options.clientId` - Client ID string (default example: ``puffscoinjs-devp2p/v2.1.3/darwin-x64/nodejs``).
 - `options.remoteClientIdFilter` - Optional list of client ID filter strings (e.g. `['go1.5', 'quorum']`).
-- `options.capabilities` - Upper layer protocol capabilities, e.g. `[devp2p.PWP.eth63, devp2p.PWP.eth62]`.
+- `options.capabilities` - Upper layer protocol capabilities, e.g. `[devp2p.PWP.puffs63, devp2p.PWP.puffs62]`.
 - `options.listenPort` - The listening port for the server or ``null`` for default.
 - `options.dpt` - `DPT` object for the peers to connect to (default: ``null``, no `DPT` peer management).
 
@@ -178,14 +172,10 @@ Events emitted:
 | error         | Forwarded from server                    |
 
 
-### Reference
 
-- [RLPx: Cryptographic Network & Transport Protocol](https://github.com/ethereum/devp2p/blob/master/rlpx.md)
-- [devp2p wire protocol](https://github.com/ethereum/wiki/wiki/%C3%90%CE%9EVp2p-Wire-Protocol)
+## Puffscoin Wire Protocol (PUFFS)
 
-## Ethereum Wire Protocol (ETH)
-
-Upper layer protocol for exchanging Ethereum network data like block headers or transactions with a node, see [./src/eth/](./src/eth/).
+Upper layer protocol for exchanging PUFFScoin network data like block headers or transactions with a node, see [./src/puffs/](./src/puffs/).
 
 ### Usage
 
@@ -193,7 +183,7 @@ Send the initial status message with ``sendStatus()``, then wait for the corresp
 to arrive to start the communication.
 
 ```
-eth.once('status', () => {
+puffs.once('status', () => {
   // Send an initial message
   eth.sendMessage()
 })
@@ -203,7 +193,7 @@ Wait for follow-up messages to arrive, send your responses.
 
 ```
 eth.on('message', async (code, payload) => {
-  if (code === devp2p.ETH.MESSAGE_CODES.NEW_BLOCK_HASHES) {
+  if (code === devp2p.PUFFS.MESSAGE_CODES.NEW_BLOCK_HASHES) {
     // Do something with your new block hashes :-)
   }
 })
@@ -213,21 +203,21 @@ See the ``peer-communication.js`` example for a more detailed use case.
 
 ### API
 
-#### `ETH` (extends `EventEmitter`)
+#### `PUFFS` (extends `EventEmitter`)
 Handles the different message types like `NEW_BLOCK_HASHES` or `GET_NODE_DATA` (see `MESSAGE_CODES`) for
 a complete list. Currently protocol versions `PV62` and `PV63` are supported.
 
-##### `new ETH(privateKey, options)`
+##### `new PUFFS(privateKey, options)`
 Normally not instantiated directly but created as a ``SubProtocol`` in the ``Peer`` object.
 - `version` - The protocol version for communicating, e.g. `63`.
 - `peer` - `Peer` object to communicate with.
 - `send` - Wrapped ``peer.sendMessage()`` function where the communication is routed to.
 
-#### `eth.sendStatus(status)`
+#### `puffs.sendStatus(status)`
 Send initial status message.
 - `status` - Status message to send, format ``{ networkId: CHAIN_ID, td: TOTAL_DIFFICULTY_BUFFER, bestHash: BEST_HASH_BUFFER, genesisHash: GENESIS_HASH_BUFFER }``.
 
-#### `eth.sendMessage(code, payload)`
+#### `puffs.sendMessage(code, payload)`
 Send initial status message.
 - `code` - The message code, see `MESSAGE_CODES` for available message types.
 - `payload` - Payload as a list, will be rlp-encoded.
@@ -241,11 +231,7 @@ Events emitted:
 | message       | Message received                         |
 | status        | Status info received                     |
 
-### Reference
-
-- [Ethereum wire protocol](https://github.com/ethereum/wiki/wiki/Ethereum-Wire-Protocol)
-
-## Light Ethereum Subprotocol (LES)
+## Light Puffscoin Subprotocol (LES)
 
 Upper layer protocol used by light clients, see [./src/les/](./src/les/).
 
@@ -304,9 +290,6 @@ Events emitted:
 | message       | Message received                         |
 | status        | Status info received                     |
 
-### Reference
-
-- [Light client protocol](https://github.com/ethereum/wiki/wiki/Light-client-protocol)
 
 ## Tests
 
