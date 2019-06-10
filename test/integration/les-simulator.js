@@ -26,7 +26,7 @@ test('LES: send status message (successful)', async (t) => {
   let opts = {}
   opts.status0 = Object.assign({}, status)
   opts.status1 = Object.assign({}, status)
-  opts.onOnceStatus0 = function (rlpxs, eth) {
+  opts.onOnceStatus0 = function (rlpxs, puffs) {
     t.pass('should receive echoing status message and welcome connection')
     util.destroyRLPXs(rlpxs)
     t.end()
@@ -40,7 +40,7 @@ test('LES: send status message (modified announceType)', async (t) => {
   opts.status0['announceType'] = 0
   opts.status1 = Object.assign({}, status)
   opts.status1['announceType'] = 0
-  opts.onOnceStatus0 = function (rlpxs, eth) {
+  opts.onOnceStatus0 = function (rlpxs, puffs) {
     t.pass('should receive echoing status message and welcome connection')
     util.destroyRLPXs(rlpxs)
     t.end()
@@ -87,7 +87,7 @@ test('LES: send valid message', async (t) => {
     les.sendMessage(devp2p.LES.MESSAGE_CODES.GET_BLOCK_HEADERS, 1, [ 437000, 1, 0, 0 ])
     t.pass('should send GET_BLOCK_HEADERS message')
   }
-  opts.onOnMsg1 = function (rlpxs, eth, code, payload) {
+  opts.onOnMsg1 = function (rlpxs, puffs, code, payload) {
     if (code === devp2p.LES.MESSAGE_CODES.GET_BLOCK_HEADERS) {
       t.pass('should receive GET_BLOCK_HEADERS message')
       util.destroyRLPXs(rlpxs)
