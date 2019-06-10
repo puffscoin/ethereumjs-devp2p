@@ -8,8 +8,8 @@ const GENESIS_TD = 17179869184
 const GENESIS_HASH = Buffer.from('b4973da140b05bfffb1cd734ed871f888e71cf563a4218f82a092fc4540f6c03', 'hex')
 
 var capabilities = [
-  devp2p.PWP.eth63,
-  devp2p.PWP.eth62
+  devp2p.PWP.puffs63,
+  devp2p.PWP.puffs62
 ]
 
 const status = {
@@ -26,7 +26,7 @@ test('PWP: send status message (successful)', async (t) => {
   let opts = {}
   opts.status0 = Object.assign({}, status)
   opts.status1 = Object.assign({}, status)
-  opts.onOnceStatus0 = function (rlpxs, eth) {
+  opts.onOnceStatus0 = function (rlpxs, puffs) {
     t.pass('should receive echoing status message and welcome connection')
     util.destroyRLPXs(rlpxs)
     t.end()
@@ -64,16 +64,16 @@ test('PWP: send status message (Genesis block mismatch)', async (t) => {
   util.twoPeerMsgExchange(t, capabilities, opts)
 })
 
-test('PWP: send allowed eth63', async (t) => {
+test('PWP: send allowed puffs63', async (t) => {
   let opts = {}
   opts.status0 = Object.assign({}, status)
   opts.status1 = Object.assign({}, status)
-  opts.onOnceStatus0 = function (rlpxs, eth) {
-    t.equal(eth.getVersion(), 63, 'should use eth63 as protocol version')
-    eth.sendMessage(devp2p.PWP.MESSAGE_CODES.NEW_BLOCK_HASHES, [ 437000, 1, 0, 0 ])
+  opts.onOnceStatus0 = function (rlpxs, puffs) {
+    t.equal(puffs.getVersion(), 63, 'should use puffs63 as protocol version')
+    puffs.sendMessage(devp2p.PWP.MESSAGE_CODES.NEW_BLOCK_HASHES, [ 437000, 1, 0, 0 ])
     t.pass('should send NEW_BLOCK_HASHES message')
   }
-  opts.onOnMsg1 = function (rlpxs, eth, code, payload) {
+  opts.onOnMsg1 = function (rlpxs, puffs, code, payload) {
     if (code === devp2p.PWP.MESSAGE_CODES.NEW_BLOCK_HASHES) {
       t.pass('should receive NEW_BLOCK_HASHES message')
       util.destroyRLPXs(rlpxs)
@@ -83,18 +83,18 @@ test('PWP: send allowed eth63', async (t) => {
   util.twoPeerMsgExchange(t, capabilities, opts)
 })
 
-test('PWP: send allowed eth62', async (t) => {
+test('PWP: send allowed puffs62', async (t) => {
   let cap = [
-    devp2p.PWP.eth62
+    devp2p.PWP.puffs62
   ]
   let opts = {}
   opts.status0 = Object.assign({}, status)
   opts.status1 = Object.assign({}, status)
-  opts.onOnceStatus0 = function (rlpxs, eth) {
-    eth.sendMessage(devp2p.PWP.MESSAGE_CODES.NEW_BLOCK_HASHES, [ 437000, 1, 0, 0 ])
+  opts.onOnceStatus0 = function (rlpxs, puffs) {
+    puffs.sendMessage(devp2p.PWP.MESSAGE_CODES.NEW_BLOCK_HASHES, [ 437000, 1, 0, 0 ])
     t.pass('should send NEW_BLOCK_HASHES message')
   }
-  opts.onOnMsg1 = function (rlpxs, eth, code, payload) {
+  opts.onOnMsg1 = function (rlpxs, puffs, code, payload) {
     if (code === devp2p.PWP.MESSAGE_CODES.NEW_BLOCK_HASHES) {
       t.pass('should receive NEW_BLOCK_HASHES message')
       util.destroyRLPXs(rlpxs)
@@ -104,16 +104,16 @@ test('PWP: send allowed eth62', async (t) => {
   util.twoPeerMsgExchange(t, cap, opts)
 })
 
-test('PWP: send not-allowed eth62', async (t) => {
+test('PWP: send not-allowed puffs62', async (t) => {
   let cap = [
-    devp2p.PWP.eth62
+    devp2p.PWP.puffs62
   ]
   let opts = {}
   opts.status0 = Object.assign({}, status)
   opts.status1 = Object.assign({}, status)
-  opts.onOnceStatus0 = function (rlpxs, eth) {
+  opts.onOnceStatus0 = function (rlpxs, puffs) {
     try {
-      eth.sendMessage(devp2p.PWP.MESSAGE_CODES.GET_NODE_DATA, [])
+      puffs.sendMessage(devp2p.PWP.MESSAGE_CODES.GET_NODE_DATA, [])
     } catch (err) {
       const msg = 'Error: Code 13 not allowed with version 62'
       t.equal(err.toString(), msg, `should emit error: ${msg}`)
@@ -128,9 +128,9 @@ test('PWP: send unknown message code', async (t) => {
   let opts = {}
   opts.status0 = Object.assign({}, status)
   opts.status1 = Object.assign({}, status)
-  opts.onOnceStatus0 = function (rlpxs, eth) {
+  opts.onOnceStatus0 = function (rlpxs, puffs) {
     try {
-      eth.sendMessage(0x55, [])
+      puffs.sendMessage(0x55, [])
     } catch (err) {
       const msg = 'Error: Unknown code 85'
       t.equal(err.toString(), msg, `should emit error: ${msg}`)
@@ -145,9 +145,9 @@ test('PWP: invalid status send', async (t) => {
   let opts = {}
   opts.status0 = Object.assign({}, status)
   opts.status1 = Object.assign({}, status)
-  opts.onOnceStatus0 = function (rlpxs, eth) {
+  opts.onOnceStatus0 = function (rlpxs, puffs) {
     try {
-      eth.sendMessage(devp2p.PWP.MESSAGE_CODES.STATUS, [])
+      puffs.sendMessage(devp2p.PWP.MESSAGE_CODES.STATUS, [])
     } catch (err) {
       const msg = 'Error: Please send status message through .sendStatus'
       t.equal(err.toString(), msg, `should emit error: ${msg}`)
