@@ -8,9 +8,9 @@
     "networking",
     "dpt",
     "rlpx",
-    "eth",
-    "eth62",
-    "eth63",
+    "puffs",
+    "puffs62",
+    "puffs63",
     "les",
     "les2"
   ],
